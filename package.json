@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/Projeto-MP-Localiza-UNB/back-end-localiza-unb#readme",
   "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "prisma": "^5.6.0"
   }
 }
