@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//npx prisma studio // abre no navegar o prisma studio
+//npx prisma migrate dev // aplicar alterações desse codigo 
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Loja{
+  id Int @id @default(autoincrement())
+  email String @unique
+  senha String
+  nome String
+  imagem String?
+  longitude_fixa Int?
+  latitude_fixa Int?
+  produtos Produto[] 
+}
+
+model Produto{
+  id Int @id @default(autoincrement())
+  nome String
+  descricao String
+  imagem String?
+  user Loja @relation(fields: [idLoja], references: [id])  
+  idLoja Int
+}
+
