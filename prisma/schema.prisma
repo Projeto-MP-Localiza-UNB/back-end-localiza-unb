@@ -19,8 +19,8 @@ model Loja{
   senha String
   nome String
   imagem String?
-  longitude_fixa Float
-  latitude_fixa Float
+  longitude_fixa Float?
+  latitude_fixa Float?
   quantidade_avaliacao Int @default(0)
   nota Int @default(5)
   produtos Produto[] 
