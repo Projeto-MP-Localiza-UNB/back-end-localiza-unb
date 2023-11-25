@@ -27,7 +27,7 @@ class Loja{
         const loja = await prisma.loja.findUnique({where: { email : email }})
         if(!loja) throw new Error("Loja não encontrada")
         if(!(await bcrypt.compare(senha, loja.senha))) throw new Error ("Senha incorreta")
-        const token = jwt.sign({id: loja.id},"secret",{expiresIn: "60m"})
+        const token = jwt.sign({id: loja.id},"secret",{expiresIn: "600m"})
         return{token}
     }
 
