@@ -19,11 +19,14 @@ model Loja{
   senha String
   nome String
   imagem String?
-  longitude_fixa Float
-  latitude_fixa Float
+  longitude_fixa Float?
+  latitude_fixa Float?
   quantidade_avaliacao Int @default(0)
   nota Int @default(5)
-  produtos Produto[] 
+  produtos Produto[]
+  tags Tags[]
+  usuarios_fav Usuario[]
+  
 }
 
 model Produto{
@@ -43,6 +46,11 @@ model Usuario{
   email String @unique
   senha String
   admin Boolean @default(false)
-  longitude_fixa Float
-  latitude_fixa Float
+  favoritos Loja[]
+}
+
+model Tags {
+  id Int @id @default(autoincrement())
+  tag String
+  lojas Loja[]
 }

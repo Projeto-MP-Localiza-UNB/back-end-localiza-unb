@@ -1,10 +1,27 @@
-import Localizacao from "./home.service.js";
+import Localizacao from "./local.service.js";
 import { Router } from "express";
+import Pesquisa from './pesquisa.service.js';
 
-const rotas = Router();
-const localizacaoController = new Localizacao();
+const homeRotas = Router();
 
-// Adiciona a rota "inicio" com a lógica de atualização da localização
-rotas.post('/inicio', localizacaoController.atualizarLocalizacaoInicio);
 
-export default rotas;
+const pesquisa = new Pesquisa();
+const localizacao = new Localizacao();
+
+homeRotas.post('/pesquisa', async (enviado, resposta) => {
+    const { palavraChave } = enviado.body;
+  
+    try {
+      const lojasEncontradas = await pesquisa.buscarLojasPorPalavraChave(palavraChave);
+  
+      if (lojasEncontradas.length > 0) {
+        resposta.status(200).json(lojasEncontradas);
+      } else {
+        resposta.status(404).json({ mensagem: 'Nenhum resultado encontrado' });
+      }
+    } catch (error) {
+      resposta.status(500).json({ erro: 'Erro interno do servidor' });
+    }
+  });
+  
+export default homeRotas;
