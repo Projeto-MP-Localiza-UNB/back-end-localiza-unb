@@ -7,9 +7,10 @@ const produtoRotas = Router()
 const produto = new Produto()
 
 produtoRotas.post("/produto",JwtGuard, async(enviado,resposta) => {
+    console.log(3)
     const{nome,descricao,imagem} = enviado.body
     try{
-        const novoProduto = await produto.criarProduto(nome,descricao,enviado.user.id,imagem)
+        const novoProduto = await produto.criarProduto(nome,descricao,enviado.loja.id,imagem)
         resposta.status(200).json(novoProduto)
     }catch(err){
         resposta.status(400).json({erro: err.message})
