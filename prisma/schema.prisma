@@ -19,8 +19,8 @@ model Loja{
   senha String
   nome String
   imagem String?
-  longitude_fixa Int?
-  latitude_fixa Int?
+  longitude_fixa Float?
+  latitude_fixa Float?
   quantidade_avaliacao Int @default(0)
   nota Int @default(5)
   produtos Produto[] 
@@ -43,6 +43,6 @@ model Usuario{
   email String @unique
   senha String
   admin Boolean @default(false)
-  longitude_fixa Int?
-  latitude_fixa Int?
+  longitude_fixa Float
+  latitude_fixa Float
 }
