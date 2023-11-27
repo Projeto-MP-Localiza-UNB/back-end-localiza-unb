@@ -1,5 +1,7 @@
 import express from "express";
 import lojasRotas from "./loja/loja.controll.js";
+import produtoRotas from "./produto/produto.controll.js";
+import rotas from "./home/home.controll.js";
 
 const app = express();
 
@@ -10,5 +12,7 @@ app.get("/", (_, res) => {
 });
 
 app.use(lojasRotas);
+app.use(produtoRotas);
+app.use(rotas);
 
 export default app;
