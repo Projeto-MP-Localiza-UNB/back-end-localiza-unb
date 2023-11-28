@@ -1,7 +1,7 @@
 import request from "supertest";
-import app from "../index.js";
+import app from "../../index.js";
 
-describe("estado do servidor", () => {
+describe("estado da aplicação", () => {
     it("deve retornar HTTP 200", async () => {
         // Dispara uma requisição no caminho '/' para a aplicação e armazena a resposta em variável
         const res = await request(app).get("/");
