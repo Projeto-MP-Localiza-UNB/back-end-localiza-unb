@@ -18,35 +18,62 @@ describe("service de lojas", () => {
     });
 
     describe("criação de nova loja", () => {
+        let lojaDataAnterior;
+
         beforeEach(() => {
             lojaData = TestUtils.gerarLoja();
         });
 
-        it("deve criar uma nova loja", async () => {
-            prismaMock.loja.create.mockResolvedValue({ ...lojaData });
+        afterEach(() => {
+            lojaDataAnterior = lojaData;
+        });
 
-            const lojaCriada = await lojaService.cadastroLoja(
-                lojaData.email,
-                lojaData.nome,
-                lojaData.senha,
-                lojaData.imagem,
-                lojaData.longitude_fixa,
-                lojaData.latitude_fixa
-            );
+        describe("criação de loja", () => {
+            it("deve criar uma nova loja", async () => {
+                prismaMock.loja.create.mockResolvedValue({ ...lojaData });
 
-            const {
-                senha: lojaCriadaSenha,
-                id: lojaCriadaId,
-                ...lojaCriadaData
-            } = lojaCriada;
+                const lojaCriada = await lojaService.cadastroLoja(
+                    lojaData.email,
+                    lojaData.nome,
+                    lojaData.senha,
+                    lojaData.imagem,
+                    lojaData.longitude_fixa,
+                    lojaData.latitude_fixa
+                );
 
-            const {
-                senha: lojaMockSenha,
-                id: lojaMockId,
-                ...lojaMockData
-            } = lojaData;
+                const {
+                    senha: lojaCriadaSenha,
+                    id: lojaCriadaId,
+                    ...lojaCriadaData
+                } = lojaCriada;
 
-            expect(lojaCriadaData).toEqual(lojaMockData);
+                const {
+                    senha: lojaMockSenha,
+                    id: lojaMockId,
+                    ...lojaMockData
+                } = lojaData;
+
+                expect(lojaCriadaData).toEqual(lojaMockData);
+            });
+
+            it("deve retornar erro", async () => {
+                prismaMock.loja.create.mockImplementation(() => {
+                    throw new Error("Email já cadastrado");
+                });
+
+                const lojaCriada = async () => {
+                    await lojaService.cadastroLoja(
+                        lojaDataAnterior.email,
+                        lojaDataAnterior.nome,
+                        lojaDataAnterior.senha,
+                        lojaDataAnterior.imagem,
+                        lojaDataAnterior.longitude_fixa,
+                        lojaDataAnterior.latitude_fixa
+                    );
+                };
+
+                expect(lojaCriada()).rejects.toThrow("Email já cadastrado");
+            });
         });
     });
 });
